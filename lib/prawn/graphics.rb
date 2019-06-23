@@ -44,8 +44,8 @@ module Prawn
     #   pdf.move_to [100,50]
     #   pdf.move_to(100,50)
     #
-    def move_to(*point)
-      xy = PDF::Core.real_params(map_to_absolute(point))
+    def move_to(x, y)
+      xy = PDF::Core.real_params(map_to_absolute(x,y))
       renderer.add_content("#{xy} m")
     end
 
@@ -56,7 +56,7 @@ module Prawn
     #   pdf.line_to(50,50)
     #
     def line_to(*point)
-      xy = PDF::Core.real_params(map_to_absolute(point))
+      xy = PDF::Core.real_params(map_to_absolute(*point))
       renderer.add_content("#{xy} l")
     end
 
@@ -73,7 +73,7 @@ module Prawn
       )
 
       curve_points = PDF::Core.real_params(
-        (options[:bounds] << dest).flat_map { |e| map_to_absolute(e) }
+        (options[:bounds] << dest).flat_map { |e| map_to_absolute(*e) }
       )
 
       renderer.add_content("#{curve_points} c")
@@ -85,7 +85,7 @@ module Prawn
     #    pdf.rectangle [300,300], 100, 200
     #
     def rectangle(point, width, height)
-      x, y = map_to_absolute(point)
+      x, y = map_to_absolute(*point)
       box = PDF::Core.real_params([x, y - height, width, height])
 
       renderer.add_content("#{box} re")
@@ -236,7 +236,7 @@ module Prawn
     #    pdf.polygon [100,100], [100,200], [200,200]
     #
     def polygon(*points)
-      move_to points[0]
+      move_to *points[0]
       (points[1..-1] << points[0]).each do |point|
         line_to(*point)
       end
@@ -253,7 +253,7 @@ module Prawn
     #     [100, 150]
     #   )
     def rounded_polygon(radius, *points)
-      move_to point_on_line(radius, points[1], points[0])
+      move_to *point_on_line(radius, points[1], points[0])
       sides = points.size
       points << points[0] << points[1]
       sides.times do |i|
@@ -654,13 +654,12 @@ module Prawn
       renderer.add_content("#{current_line_width} w")
     end
 
-    def map_to_absolute(*point)
-      x, y = point.flatten
+    def map_to_absolute(x,y)
       [@bounding_box.absolute_left + x, @bounding_box.absolute_bottom + y]
     end
 
-    def map_to_absolute!(point)
-      point.replace(map_to_absolute(point))
+    def map_to_absolute!(x,y)
+      point.replace(map_to_absolute(x,y))
     end
 
     def degree_to_rad(angle)

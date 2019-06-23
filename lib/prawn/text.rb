@@ -301,7 +301,7 @@ module Prawn
         font.class.hide_m17n_warning = true
       end
 
-      x, y = map_to_absolute(options[:at])
+      x, y = map_to_absolute(*options[:at])
       add_text_content(text, x, y, options)
     end
 

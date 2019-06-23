@@ -157,7 +157,7 @@ module Prawn
     #
     def bounding_box(point, *args, &block)
       init_bounding_box(block) do |parent_box|
-        point = map_to_absolute(point)
+        point = map_to_absolute(*point)
         @bounding_box = BoundingBox.new(self, parent_box, point, *args)
       end
     end

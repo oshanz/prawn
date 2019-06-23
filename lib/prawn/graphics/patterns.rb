@@ -243,8 +243,8 @@ module Prawn
       end
 
       def gradient_coordinates(gradient)
-        x1, y1 = map_to_absolute(gradient.from)
-        x2, y2 = map_to_absolute(gradient.to)
+        x1, y1 = map_to_absolute(*gradient.from)
+        x2, y2 = map_to_absolute(*gradient.to)
 
         transformation =
           if gradient.apply_transformations

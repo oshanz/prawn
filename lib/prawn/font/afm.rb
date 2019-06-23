@@ -109,7 +109,7 @@ module Prawn
         text.encode('windows-1252')
       rescue ::Encoding::InvalidByteSequenceError,
              ::Encoding::UndefinedConversionError
-
+        p "3wewer"
         raise Prawn::Errors::IncompatibleStringEncoding,
           "Your document includes text that's not compatible with the " \
           "Windows-1252 character set.\n" \
@@ -146,6 +146,7 @@ module Prawn
       def glyph_present?(char)
         !normalize_encoding(char).nil?
       rescue Prawn::Errors::IncompatibleStringEncoding
+        p "23234234"
         false
       end
 

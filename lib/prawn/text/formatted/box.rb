@@ -527,6 +527,7 @@ module Prawn
               begin
                 wrap(text)
               rescue Errors::CannotFit
+                p "123123wef"
                 # Ignore errors while we can still attempt smaller
                 # font sizes.
               end

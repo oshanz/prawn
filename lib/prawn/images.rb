@@ -117,7 +117,7 @@ module Prawn
       w, h = info.calc_image_dimensions(options)
 
       if options[:at]
-        x, y = map_to_absolute(options[:at])
+        x, y = map_to_absolute(*options[:at])
       else
         x, y = image_position(w, h, options)
         move_text_position h

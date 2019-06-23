@@ -166,9 +166,10 @@ module Prawn
         end
 
         def soft_hyphen(encoding = ::Encoding::UTF_8)
-          Prawn::Text::SHY.encode(encoding)
+            Prawn::Text::SHY
         rescue ::Encoding::InvalidByteSequenceError,
                ::Encoding::UndefinedConversionError
+               p "234234"
           nil
         end
 
@@ -181,20 +182,27 @@ module Prawn
         end
 
         def zero_width_space(encoding = ::Encoding::UTF_8)
-          Prawn::Text::ZWSP.encode(encoding)
+          if encoding == ::Encoding::UTF_8
+            return $qq if defined?($qq)
+            $qq = Prawn::Text::ZWSP.encode(encoding)
+          else
+            return nil
+          end
         rescue ::Encoding::InvalidByteSequenceError,
                ::Encoding::UndefinedConversionError
+               p "234234"
           nil
         end
 
         def whitespace(encoding = ::Encoding::UTF_8)
-          "\s\t#{zero_width_space(encoding)}".encode(encoding)
+            "\s\t#{zero_width_space(encoding)}"
         end
 
         def hyphen(_encoding = ::Encoding::UTF_8)
           '-'
         rescue ::Encoding::InvalidByteSequenceError,
                ::Encoding::UndefinedConversionError
+               p "32423rf23r"
           nil
         end
 

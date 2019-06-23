@@ -61,6 +61,7 @@ module Prawn
               fragment.text.dup.encode(::Encoding::UTF_8)
             rescue ::Encoding::InvalidByteSequenceError,
                    ::Encoding::UndefinedConversionError
+              p "sdfsdf"
               fragment.text.dup.force_encoding(::Encoding::UTF_8)
             end
           end.join
